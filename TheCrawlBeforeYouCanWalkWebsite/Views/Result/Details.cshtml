@@ -1,0 +1,43 @@
+﻿@model TheCrawlBeforeYouCanWalkWebsite.Models.Person
+
+@{
+    ViewData["Title"] = "Testresultat";
+}
+
+<div>
+    <h4>Testresultater for @Model.Name</h4>
+    <hr />
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <dl>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.SocialSecurityNo)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.SocialSecurityNo)
+                    </dd>
+                </dl>
+            </div>
+            <div class="col-6">
+                <dl>
+                    @foreach (var result in Model.Results)
+                    {
+                        <dt>
+                            Resultat af prøve d. @result.SampleDate.ToString("D")
+                        </dt>
+                        <dd>
+                            result.
+                        </dd>
+                    }
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>

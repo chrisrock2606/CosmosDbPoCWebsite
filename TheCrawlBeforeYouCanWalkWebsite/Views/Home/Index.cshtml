@@ -1,0 +1,37 @@
+﻿@model TheCrawlBeforeYouCanWalkWebsite.Models.Person
+@{
+    ViewData["Title"] = "Registrer test";
+}
+
+<div class="text-center">
+    <h2 class="display-4">Kommunens Covid-19 testregistrering</h2>
+    <p>Registrer test</p>
+</div>
+@using (Html.BeginForm("Create", "Home"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div>
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SocialSecurityNo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div>
+                @Html.EditorFor(model => model.SocialSecurityNo, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <input type="submit" value="Opret" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+

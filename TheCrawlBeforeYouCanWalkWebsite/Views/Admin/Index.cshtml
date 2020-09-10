@@ -1,0 +1,61 @@
+﻿@model IEnumerable<TheCrawlBeforeYouCanWalkWebsite.Models.Person>
+
+@{
+    ViewData["Title"] = "Index";
+    var conclusions = new List<SelectListItem> {
+        new SelectListItem { Value = "true", Text = "Positiv" },
+        new SelectListItem { Value = "false", Text = "Negativ" }
+    };
+}
+
+
+
+<h1>Registrer resultater</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SocialSecurityNo)
+            </th>
+            <th>
+                Anfør resultat af test
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SocialSecurityNo)
+                </td>
+                <td>
+                    @foreach (var result in item.Results)
+                    {
+                        <p>Test d. @result.SampleDate.ToString("D")</p>
+                        @using (Html.BeginForm("Update", "Admin"))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <select asp-for="@result.Id" asp-items="@conclusions">
+                                        <option>Angiv konklusion</option>
+                                    </select>
+                                    <input type="submit" value="OK" class="btn btn-default" />
+                                </div>
+                            </div>
+                        }
+                        <br />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
