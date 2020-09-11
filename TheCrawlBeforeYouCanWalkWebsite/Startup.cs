@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -27,6 +28,7 @@ namespace TheCrawlBeforeYouCanWalkWebsite
         {
             services.AddControllersWithViews();
             services.AddSingleton(InitializeCosmosClientInstanceAsync(Configuration.GetSection("CosmosDb")).GetAwaiter().GetResult());
+            CultureInfo.CurrentCulture = CultureInfo.CreateSpecificCulture("da-DK");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

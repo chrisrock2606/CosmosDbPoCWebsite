@@ -29,7 +29,7 @@
                 <td>
                     @foreach (var result in person.Results)
                     {
-                        <p>Test d. @result.SampleDate.ToString("D")</p>
+                        <p>Test d. @result.SampleDate.ToString("d MMM")</p>
 
                         @using (Html.BeginForm("Results", "Admin", person))
                         {
