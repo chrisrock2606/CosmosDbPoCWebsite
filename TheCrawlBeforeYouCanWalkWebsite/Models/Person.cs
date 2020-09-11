@@ -11,16 +11,16 @@ namespace TheCrawlBeforeYouCanWalkWebsite.Models
 
         public string Id { get; set; }
 
-        [Display(Name = "Navn")]
+        [Required, Display(Name = "Navn")]
         public string Name { get; set; }
 
-        [Display(Name = "CPR-nummer")]
+        [Required, Display(Name = "CPR-nummer")]
         public long SocialSecurityNo { get; set; }
         public List<Result> Results { get; set; } = new List<Result>();
 
         public Person()
         {
-            Id = Guid.NewGuid().ToString();
+            Id = Guid.NewGuid().ToString("N");
         }
     }
 }

@@ -1,15 +1,5 @@
 ﻿@model IEnumerable<TheCrawlBeforeYouCanWalkWebsite.Models.Person>
 
-@{
-    ViewData["Title"] = "Index";
-    var conclusions = new List<SelectListItem> {
-        new SelectListItem { Value = "true", Text = "Positiv" },
-        new SelectListItem { Value = "false", Text = "Negativ" }
-    };
-}
-
-
-
 <h1>Registrer resultater</h1>
 
 <table class="table">
@@ -27,28 +17,35 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var person in Model)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => person.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.SocialSecurityNo)
+                    @Html.DisplayFor(modelItem => person.SocialSecurityNo)
                 </td>
                 <td>
-                    @foreach (var result in item.Results)
+                    @foreach (var result in person.Results)
                     {
                         <p>Test d. @result.SampleDate.ToString("D")</p>
-                        @using (Html.BeginForm("Update", "Admin"))
+
+                        @using (Html.BeginForm("SubmitTestResult", "Admin", result))
                         {
                             @Html.AntiForgeryToken()
                             <div class="form-horizontal">
                                 <div class="form-group">
-                                    <select asp-for="@result.Id" asp-items="@conclusions">
-                                        <option>Angiv konklusion</option>
-                                    </select>
-                                    <input type="submit" value="OK" class="btn btn-default" />
+                                    @Html.LabelFor(model => result.Conclusion, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div>
+                                        <select asp-for="@result.Conclusion" asp-items="Html.GetEnumSelectList<TestConclusion>()"></select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div>
+                                        <input type="submit" value="Opret" class="btn btn-default" />
+                                    </div>
                                 </div>
                             </div>
                         }

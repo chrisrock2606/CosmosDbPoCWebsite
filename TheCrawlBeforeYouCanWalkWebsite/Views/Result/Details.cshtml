@@ -33,7 +33,13 @@
                             Resultat af prøve d. @result.SampleDate.ToString("D")
                         </dt>
                         <dd>
-                            result.
+                            @{ 
+                                var testResult = Html
+                                    .GetEnumSelectList<TestConclusion>()
+                                    .FirstOrDefault(x => int.Parse(x.Value) == (int)result.Conclusion)?
+                                    .Text;
+                                }
+                            @testResult
                         </dd>
                     }
                 </dl>

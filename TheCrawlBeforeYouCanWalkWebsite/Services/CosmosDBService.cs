@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.DataProtection.Repositories;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Azure.Cosmos;
-using TheCrawlBeforeYouCanWalkWebsite.Models;
-
-namespace TheCrawlBeforeYouCanWalkWebsite.Services
+﻿namespace TheCrawlBeforeYouCanWalkWebsite.Services
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Cosmos;
+    using Microsoft.Azure.Cosmos.Fluent;
+    using Microsoft.Extensions.Configuration;
+    using TheCrawlBeforeYouCanWalkWebsite.Models;
+
+
     public class CosmosDbService
     {
         private Container _container;
@@ -19,12 +18,9 @@ namespace TheCrawlBeforeYouCanWalkWebsite.Services
             _container = dbClient.GetContainer(databaseName, containerName);
         }
 
-        public async Task<Person> AddItemAsync(Person item)
+        public async Task<Person> AddItemAsync(Person person)
         {
-            Type itemType = item.GetType();
-            PropertyInfo propertyInfo = itemType.GetProperty("Id");
-            var response = await _container.CreateItemAsync(item, new PartitionKey(propertyInfo.GetValue(item).ToString()));
-            return response.Resource;
+            return await _container.CreateItemAsync(person, new PartitionKey(person.Id));
         }
 
         public async Task DeleteItemAsync(string id)
@@ -41,8 +37,9 @@ namespace TheCrawlBeforeYouCanWalkWebsite.Services
             }
             catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
-                return default;
+                return null;
             }
+
         }
 
         public async Task<IEnumerable<Person>> GetItemsAsync(string queryString)

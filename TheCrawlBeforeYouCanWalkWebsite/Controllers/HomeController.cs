@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.Permissions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using TheCrawlBeforeYouCanWalkWebsite.Models;
 using TheCrawlBeforeYouCanWalkWebsite.Services;
@@ -35,12 +32,12 @@ namespace TheCrawlBeforeYouCanWalkWebsite.Controllers
         {
             if (ModelState.IsValid)
             {
-                // SQL injection alert!
+                // SQL injection alert :-/
                 var sqlQueryText = $"SELECT * FROM c WHERE c.Name = '{person.Name}' AND c.SocialSecurityNo = {person.SocialSecurityNo}";
                 var queryResult = await _cosmosDbService.GetItemsAsync(sqlQueryText);
 
                 var personStoredInCosmosDb = queryResult.Any() ? queryResult.First() : await _cosmosDbService.AddItemAsync(person);
-                personStoredInCosmosDb.Results.Add(new Result { SampleDate = DateTime.Now });
+                personStoredInCosmosDb.Results.Add(new Result { PersonId = personStoredInCosmosDb.Id, SampleDate = DateTime.Now });
                 await _cosmosDbService.UpdateItemAsync(personStoredInCosmosDb.Id, personStoredInCosmosDb);
 
                 return RedirectToAction("Details", "Result", new { personStoredInCosmosDb.SocialSecurityNo });

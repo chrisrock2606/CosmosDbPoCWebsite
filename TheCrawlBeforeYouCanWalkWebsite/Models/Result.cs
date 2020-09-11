@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -6,21 +7,25 @@ namespace TheCrawlBeforeYouCanWalkWebsite.Models
 {
     public enum TestConclusion {
         [Display(Name = "Afventer")]
-        Waiting,
+        Waiting = 0,
         [Display(Name = "Positiv")]
-        Postive,
+        Postive = 1,
         [Display(Name = "Negativ")]
-        Negative
+        Negative = 2
     };
     public class Result
     {
         public string Id { get; set; }
         public DateTime SampleDate { get; set; }
+
+        [Display(Name = "Testresultat")]
+        [EnumDataType(typeof(TestConclusion))]
         public TestConclusion Conclusion { get; set; }
+        public string PersonId { get; set; }
 
         public Result()
         {
-            Id = Guid.NewGuid().ToString();
+            Id = Guid.NewGuid().ToString("N");
         }
     }
 }
