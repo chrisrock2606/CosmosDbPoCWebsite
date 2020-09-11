@@ -1,14 +1,11 @@
-﻿namespace TheCrawlBeforeYouCanWalkWebsite.Services
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.Azure.Cosmos;
+using TheCrawlBeforeYouCanWalkWebsite.Models;
+
+namespace TheCrawlBeforeYouCanWalkWebsite.Services
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using Microsoft.Azure.Cosmos;
-    using Microsoft.Azure.Cosmos.Fluent;
-    using Microsoft.Extensions.Configuration;
-    using TheCrawlBeforeYouCanWalkWebsite.Models;
-
-
     public class CosmosDbService
     {
         private Container _container;
