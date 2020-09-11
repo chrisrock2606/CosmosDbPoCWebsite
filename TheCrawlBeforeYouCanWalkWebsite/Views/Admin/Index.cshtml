@@ -31,22 +31,22 @@
                     {
                         <p>Test d. @result.SampleDate.ToString("D")</p>
 
-                        @using (Html.BeginForm("SubmitTestResult", "Admin", result))
+                        @using (Html.BeginForm("Results", "Admin", person))
                         {
                             @Html.AntiForgeryToken()
                             <div class="form-horizontal">
                                 <div class="form-group">
-                                    @Html.LabelFor(model => result.Conclusion, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div>
                                         <select asp-for="@result.Conclusion" asp-items="Html.GetEnumSelectList<TestConclusion>()"></select>
                                     </div>
+                                    <input type="submit" value="OK" class="btn btn-default" />
                                 </div>
 
-                                <div class="form-group">
+                                @*<div class="form-group">
                                     <div>
-                                        <input type="submit" value="Opret" class="btn btn-default" />
+                                        <input type="submit" value="OK" class="btn btn-default" />
                                     </div>
-                                </div>
+                                </div>*@
                             </div>
                         }
                         <br />

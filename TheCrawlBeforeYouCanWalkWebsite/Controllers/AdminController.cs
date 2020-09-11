@@ -14,6 +14,9 @@ namespace TheCrawlBeforeYouCanWalkWebsite.Controllers
         {
             _cosmosDbService = cosmosDbService;
         }
+
+        [HttpGet]
+        [ActionName("Index")]
         public async Task<IActionResult> Index()
         {
             var sqlQueryText = "SELECT * FROM c";
@@ -22,9 +25,9 @@ namespace TheCrawlBeforeYouCanWalkWebsite.Controllers
         }
 
         [HttpPost]
-        [ActionName("SubmitTestResult")]
+        [ActionName("Results")]
         [ValidateAntiForgeryToken]
-        public async Task UpdateResult(Result updatedResult)        
+        public async Task<IActionResult> Results(Result updatedResult)
         {
             if (updatedResult.PersonId != null)
             {
@@ -40,7 +43,8 @@ namespace TheCrawlBeforeYouCanWalkWebsite.Controllers
                 }
                 await _cosmosDbService.UpdateItemAsync(person.Id, person);
             }
-            RedirectToAction("Index", "Admin");
+
+            return RedirectToAction("Index");
         }
     }
 }
